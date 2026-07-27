@@ -1,20 +1,24 @@
 #include"Form.hpp"
+#include"Bureaucrat.hpp"
 
-Form::Form()
+Form::Form():_name("Default"),_is_signed(false),_sign_grade(150),_execute_grade(150)
 {    
 }
 
-Form::Form(std::string name,int sign_grade,int execute_grade)
+Form::Form(std::string name,int sign_grade,int execute_grade):_name(name),_sign_grade(sign_grade),_execute_grade(execute_grade)
 {
 
 }
 
-Form::Form(const Form& other)
+Form::Form(const Form& other):_name(other._name),_is_signed(other._is_signed),_sign_grade(other._sign_grade),_execute_grade(other._execute_grade)
 {
 }
 
 Form &Form::operator=(const Form& other)
 {
+    if(this!=&other)
+        _is_signed=other._is_signed;
+    return(*this);
 
 }
 
@@ -25,7 +29,10 @@ Form::~Form()
 
 void Form::beSigned(const Bureaucrat& bureaucrat)
 {
-
+    if(bureaucrat.getGrade()<=_sign_grade)
+        _is_signed=true;
+    else
+        GradeTooLowException();
 }
 
 
@@ -56,8 +63,8 @@ const char* Form::GradeTooLowException::what() const throw()
     return("Bureaucrat grade is too low");
 }
 
-std::ostream& operator<<(std::ostream& out,const Bureaucrat& bureaucrat)
+std::ostream& operator<<(std::ostream& out,const Form& form)
 {
-    out<<bureaucrat.getName()<<", bureaucrat grade "<<bureaucrat.getGrade()<<".";
+    out<<form.getName()<<" signed "<<form.getName()<<".";
     return out;
 }

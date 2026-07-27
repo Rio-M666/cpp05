@@ -1,10 +1,10 @@
-NAME := bureaucrat
+NAME := form
 
 CXX := c++
 CXXFLAGS := -Wall -Wextra -Werror -std=c++98 -pedantic
 RM := rm -rf
 
-SRCS := main.cpp Bureaucrat.cpp
+SRCS := main.cpp Bureaucrat.cpp Form.cpp
 OBJDIR := obj
 DEPDIR := dep
 OBJS := $(addprefix $(OBJDIR)/,$(SRCS:.cpp=.o))

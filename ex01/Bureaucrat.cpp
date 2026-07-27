@@ -1,4 +1,6 @@
 #include "Bureaucrat.hpp"
+#include"Form.hpp"
+
 
 Bureaucrat ::Bureaucrat():_name("Default"),_grade(150)
 {
@@ -25,6 +27,21 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &other)
 
 Bureaucrat::~Bureaucrat()
 {
+}
+
+void Bureaucrat::signForm(Form& form)
+{
+    try
+    {
+        form.beSigned(*this);
+    }
+    catch(const std::exception& e)
+    {
+        std::cout << _name << " couldn't sign " << form.getName() << " because " << e.what() << std::endl;
+		return;
+    }
+	std::cout << _name << " signed " << form.getName() << std::endl;
+
 }
 
 std::string Bureaucrat::getName()const
