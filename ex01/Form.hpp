@@ -16,7 +16,7 @@ class Form
         const int _execute_grade;
     public:
         Form();
-        Form(std::string name,int sign_grade,int execute_grade);
+        Form(const std::string name,int sign_grade,int execute_grade);
         Form(const Form& other);
         Form &operator=(const Form &other);
         ~Form();

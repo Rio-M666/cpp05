@@ -7,7 +7,6 @@ Form::Form():_name("Default"),_is_signed(false),_sign_grade(150),_execute_grade(
 
 Form::Form(const std::string name,int sign_grade,int execute_grade):_name(name),_is_signed(false),_sign_grade(sign_grade),_execute_grade(execute_grade)
 {
-
 }
 
 Form::Form(const Form& other):_name(other._name),_is_signed(other._is_signed),_sign_grade(other._sign_grade),_execute_grade(other._execute_grade)
@@ -19,12 +18,10 @@ Form &Form::operator=(const Form& other)
     if(this!=&other)
         _is_signed=other._is_signed;
     return(*this);
-
 }
 
 Form::~Form()
 {
-
 }
 
 void Form::beSigned(const Bureaucrat& bureaucrat)
