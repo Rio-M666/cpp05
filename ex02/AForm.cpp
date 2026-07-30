@@ -5,7 +5,7 @@ AForm::AForm():_name("Default"),_is_signed(false),_sign_grade(150),_execute_grad
 {    
 }
 
-AForm::AForm(const std::string name,int sign_grade,int execute_grade):_name(name),_is_signed(false),_sign_grade(sign_grade),_execute_grade(execute_grade)
+AForm::AForm(const std::string& name,int sign_grade,int execute_grade):_name(name),_is_signed(false),_sign_grade(sign_grade),_execute_grade(execute_grade)
 {
     if (_sign_grade < 1 || _execute_grade < 1)
         throw GradeTooHighException();

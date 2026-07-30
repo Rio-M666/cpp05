@@ -18,7 +18,7 @@ class AForm
         virtual void executeAction() const = 0;
     public:
         AForm();
-        AForm(const std::string name,int sign_grade,int execute_grade);
+        AForm(const std::string& name,int sign_grade,int execute_grade);
         AForm(const AForm& other);
         AForm &operator=(const AForm &other);
         virtual ~AForm();

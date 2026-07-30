@@ -4,7 +4,7 @@
 RobotomyRequestForm::RobotomyRequestForm():AForm("RobotomyRequestForm",72,45),_target("Default")
 {
 }
-RobotomyRequestForm::RobotomyRequestForm(const std::string target):AForm("RobotomyRequestForm",72,45),_target(target)
+RobotomyRequestForm::RobotomyRequestForm(const std::string& target):AForm("RobotomyRequestForm",72,45),_target(target)
 {
 }
 RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other):AForm(other),_target(other._target)
@@ -13,7 +13,10 @@ RobotomyRequestForm::RobotomyRequestForm(const RobotomyRequestForm& other):AForm
 RobotomyRequestForm &RobotomyRequestForm::operator=(const RobotomyRequestForm& other)
 {
     if(this!=&other)
+    {
         AForm::operator=(other);
+        _target=other._target;
+    }
     return *this;
 }
 RobotomyRequestForm::~RobotomyRequestForm()

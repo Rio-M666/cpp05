@@ -6,7 +6,7 @@ Bureaucrat ::Bureaucrat():_name("Default"),_grade(150)
 {
 }
 
-Bureaucrat::Bureaucrat(const std::string name,int grade): _name(name), _grade(grade)
+Bureaucrat::Bureaucrat(const std::string& name,int grade): _name(name), _grade(grade)
 {
     if(grade<1)
         throw GradeTooHighException();
@@ -96,4 +96,3 @@ std::ostream& operator<<(std::ostream& out,const Bureaucrat& bureaucrat)
     out<<bureaucrat.getName()<<", bureaucrat grade "<<bureaucrat.getGrade()<<".";
     return out;
 }
-
