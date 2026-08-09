@@ -115,7 +115,7 @@ int main(void)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unexpected exception: " << e.what() << std::endl;
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
         return 1;
     }
 

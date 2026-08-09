@@ -21,7 +21,7 @@ int main(void)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unexpected exception: " << e.what() << std::endl;
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
     }
 
     printTitle("Successful signing");
@@ -38,7 +38,7 @@ int main(void)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unexpected exception: " << e.what() << std::endl;
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
     }
 
     printTitle("Failed signing");
@@ -53,7 +53,7 @@ int main(void)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Exception: " << e.what() << std::endl;
+        std::cout << "Exception: " << e.what() << std::endl;
     }
 
     printTitle("Invalid form grades");
@@ -94,7 +94,7 @@ int main(void)
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unexpected exception: " << e.what() << std::endl;
+        std::cout << "Unexpected exception: " << e.what() << std::endl;
     }
 
     return 0;
