@@ -23,6 +23,21 @@ Intern::~Intern()
 {
 }
 
+AForm* Intern::createShrubberyCreationForm(const std::string& target)
+{
+    return new ShrubberyCreationForm(target);
+}
+
+AForm* Intern::createRobotomyRequestForm(const std::string& target)
+{
+    return new RobotomyRequestForm(target);
+}
+
+AForm* Intern::createPresidentialPardonForm(const std::string& target)
+{
+    return new PresidentialPardonForm(target);
+}
+
 AForm* Intern::makeForm(const std::string& formName,
                         const std::string& target)
 {
@@ -31,23 +46,21 @@ AForm* Intern::makeForm(const std::string& formName,
         "robotomy request",
         "presidential pardon"
     };
+    typedef AForm* (Intern::*FormCreator)(const std::string&);
+    const FormCreator creators[3] = {
+        &Intern::createShrubberyCreationForm,
+        &Intern::createRobotomyRequestForm,
+        &Intern::createPresidentialPardonForm
+    };
     int i = 0;
 
     while (i < 3 && formName != forms[i])
         ++i;
-    switch (i)
+    if (i == 3)
     {
-        case 0:
-            std::cout << "Intern creates " << formName << std::endl;
-            return new ShrubberyCreationForm(target);
-        case 1:
-            std::cout << "Intern creates " << formName << std::endl;
-            return new RobotomyRequestForm(target);
-        case 2:
-            std::cout << "Intern creates " << formName << std::endl;
-            return new PresidentialPardonForm(target);
-        default:
-            std::cout << "Form does not exist" << std::endl;
-            return NULL;
+        std::cout << "Form does not exist" << std::endl;
+        return NULL;
     }
+    std::cout << "Intern creates " << formName << std::endl;
+    return (this->*creators[i])(target);
 }

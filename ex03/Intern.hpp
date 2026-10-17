@@ -7,6 +7,11 @@ class AForm;
 
 class Intern
 {
+    private:
+        AForm* createShrubberyCreationForm(const std::string& target);
+        AForm* createRobotomyRequestForm(const std::string& target);
+        AForm* createPresidentialPardonForm(const std::string& target);
+
     public:
         Intern();
         Intern(const Intern& other);
