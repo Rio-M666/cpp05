@@ -33,4 +33,7 @@ void ShrubberyCreationForm::executeAction() const
          << "     /****\\\n"
          << "    /******\\\n"
          << "       ||\n";
+    file.close();
+    if (!file)
+        throw std::runtime_error("Could not write shrubbery file");
 }
