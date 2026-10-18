@@ -1,62 +1,51 @@
 #include "Bureaucrat.hpp"
 #include "Form.hpp"
 
+#include <exception>
+#include <iostream>
+#include <string>
+
 static void printTitle(const std::string& title)
 {
     std::cout << "\n=== " << title << " ===" << std::endl;
 }
 
-int main(void)
+static void testConstruction(void)
 {
     printTitle("Valid construction");
-    try
-    {
-        Bureaucrat chief("Chief", 1);
-        Bureaucrat employee("Employee", 75);
-        Form permit("Permit", 50, 25);
 
-        std::cout << chief << std::endl;
-        std::cout << employee << std::endl;
-        std::cout << permit << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-        std::cout << "Unexpected exception: " << e.what() << std::endl;
-    }
+    Bureaucrat chief("Chief", 1);
+    Bureaucrat employee("Employee", 75);
+    Form permit("Permit", 50, 25);
 
-    printTitle("Successful signing");
-    try
-    {
-        Bureaucrat manager("Manager", 25);
-        Form contract("Contract", 50, 20);
+    std::cout << chief << std::endl;
+    std::cout << employee << std::endl;
+    std::cout << permit << std::endl;
+}
 
-        std::cout << "Before: signed = "
-                  << contract.getIsSigned() << std::endl;
-        manager.signForm(contract);
-        std::cout << "After : signed = "
-                  << contract.getIsSigned() << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-        std::cout << "Unexpected exception: " << e.what() << std::endl;
-    }
+static void testSigning(void)
+{
+    printTitle("Signing boundaries");
 
-    printTitle("Failed signing");
-    try
-    {
-        Bureaucrat intern("Intern", 100);
-        Form classified("Classified", 20, 10);
+    Bureaucrat signer("Signer", 50);
+    Bureaucrat weakSigner("Weak signer", 51);
+    Form contract("Contract", 50, 20);
 
-        intern.signForm(classified);
-        std::cout << "Signed state: "
-                  << classified.getIsSigned() << std::endl;
-    }
-    catch (const std::exception& e)
-    {
-        std::cout << "Exception: " << e.what() << std::endl;
-    }
+    std::cout << contract << std::endl;
 
+    std::cout << "[sign with insufficient grade]" << std::endl;
+    weakSigner.signForm(contract);
+    std::cout << contract << std::endl;
+
+    std::cout << "[sign at the required grade]" << std::endl;
+    signer.signForm(contract);
+    std::cout << contract << std::endl;
+}
+
+static void testInvalidGrades(void)
+{
     printTitle("Invalid form grades");
+
     try
     {
         Form tooHigh("TooHigh", 0, 50);
@@ -76,25 +65,38 @@ int main(void)
     {
         std::cout << "Expected exception: " << e.what() << std::endl;
     }
+}
 
+static void testCopy(void)
+{
     printTitle("Copy and assignment");
+
+    Bureaucrat signer("Signer", 1);
+    Form original("Original", 10, 5);
+
+    signer.signForm(original);
+    Form copied(original);
+    Form assigned;
+    assigned = original;
+
+    std::cout << "Original: " << original << std::endl;
+    std::cout << "Copied  : " << copied << std::endl;
+    std::cout << "Assigned: " << assigned << std::endl;
+}
+
+int main(void)
+{
     try
     {
-        Bureaucrat signer("Signer", 1);
-        Form original("Original", 10, 5);
-
-        signer.signForm(original);
-        Form copied(original);
-        Form assigned;
-        assigned = original;
-
-        std::cout << "Original signed: " << original.getIsSigned() << std::endl;
-        std::cout << "Copied signed  : " << copied.getIsSigned() << std::endl;
-        std::cout << "Assigned signed: " << assigned.getIsSigned() << std::endl;
+        testConstruction();
+        testSigning();
+        testInvalidGrades();
+        testCopy();
     }
     catch (const std::exception& e)
     {
         std::cout << "Unexpected exception: " << e.what() << std::endl;
+        return 1;
     }
 
     return 0;

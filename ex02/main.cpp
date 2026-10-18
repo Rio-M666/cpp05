@@ -1,3 +1,4 @@
+#include "AForm.hpp"
 #include "Bureaucrat.hpp"
 #include "PresidentialPardonForm.hpp"
 #include "RobotomyRequestForm.hpp"
@@ -5,22 +6,23 @@
 
 #include <cstdlib>
 #include <ctime>
+#include <exception>
 #include <iostream>
+#include <string>
 
 static void printTitle(const std::string& title)
 {
     std::cout << "\n=== " << title << " ===" << std::endl;
 }
 
-static void testShrubbery(void)
+static void testForm(AForm& form)
 {
-    printTitle("ShrubberyCreationForm");
+    printTitle(form.getName());
 
-    ShrubberyCreationForm form("garden");
-    Bureaucrat signer("Shrubbery signer", 145);
-    Bureaucrat weakSigner("Weak signer", 146);
-    Bureaucrat executor("Shrubbery executor", 137);
-    Bureaucrat weakExecutor("Weak executor", 138);
+    Bureaucrat signer("Signer", form.getSignGrade());
+    Bureaucrat weakSigner("Weak signer", form.getSignGrade() + 1);
+    Bureaucrat executor("Executor", form.getExecuteGrade());
+    Bureaucrat weakExecutor("Weak executor", form.getExecuteGrade() + 1);
 
     std::cout << form << std::endl;
 
@@ -29,77 +31,62 @@ static void testShrubbery(void)
 
     std::cout << "[sign with insufficient grade]" << std::endl;
     weakSigner.signForm(form);
+    std::cout << form << std::endl;
 
-    std::cout << "[sign successfully]" << std::endl;
+    std::cout << "[sign at the required grade]" << std::endl;
     signer.signForm(form);
     std::cout << form << std::endl;
 
     std::cout << "[execute with insufficient grade]" << std::endl;
     weakExecutor.executeForm(form);
 
-    std::cout << "[execute successfully]" << std::endl;
+    std::cout << "[execute at the required grade]" << std::endl;
     executor.executeForm(form);
+}
+
+static void testShrubbery(void)
+{
+    ShrubberyCreationForm form("garden");
+    testForm(form);
 }
 
 static void testRobotomy(void)
 {
-    printTitle("RobotomyRequestForm");
-
     RobotomyRequestForm form("Bender");
-    Bureaucrat signer("Robotomy signer", 72);
-    Bureaucrat executor("Robotomy executor", 45);
-    Bureaucrat weakExecutor("Weak executor", 46);
+    testForm(form);
 
-    std::cout << form << std::endl;
-
-    std::cout << "[execute before signing]" << std::endl;
-    executor.executeForm(form);
-
-    std::cout << "[sign successfully]" << std::endl;
-    signer.signForm(form);
-
-    std::cout << "[execute with insufficient grade]" << std::endl;
-    weakExecutor.executeForm(form);
-
-    std::cout << "[execute four times to test 50% result]" << std::endl;
-    for (int i = 0; i < 4; ++i)
+    Bureaucrat executor("Executor", form.getExecuteGrade());
+    std::cout << "[execute three more times to observe random outcomes]"
+              << std::endl;
+    for (int i = 0; i < 3; ++i)
         executor.executeForm(form);
 }
 
 static void testPresidentialPardon(void)
 {
-    printTitle("PresidentialPardonForm");
-
     PresidentialPardonForm form("Arthur Dent");
-    Bureaucrat signer("Pardon signer", 25);
-    Bureaucrat executor("President", 5);
-    Bureaucrat weakExecutor("Minister", 6);
-
-    std::cout << form << std::endl;
-
-    std::cout << "[sign successfully]" << std::endl;
-    signer.signForm(form);
-
-    std::cout << "[execute with insufficient grade]" << std::endl;
-    weakExecutor.executeForm(form);
-
-    std::cout << "[execute successfully]" << std::endl;
-    executor.executeForm(form);
+    testForm(form);
 }
 
 static void testCopy(void)
 {
-    printTitle("Copy constructor");
+    printTitle("Copy and assignment");
 
-    Bureaucrat president("President", 1);
+    Bureaucrat boss("Boss", 1);
     PresidentialPardonForm original("Ford Prefect");
 
-    president.signForm(original);
+    boss.signForm(original);
     PresidentialPardonForm copied(original);
+    PresidentialPardonForm assigned;
+    assigned = original;
 
     std::cout << "Original: " << original << std::endl;
     std::cout << "Copied  : " << copied << std::endl;
-    president.executeForm(copied);
+    std::cout << "Assigned: " << assigned << std::endl;
+
+    std::cout << "[execute copied and assigned forms]" << std::endl;
+    boss.executeForm(copied);
+    boss.executeForm(assigned);
 }
 
 int main(void)
