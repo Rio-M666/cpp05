@@ -8,18 +8,16 @@
 #include <iostream>
 #include <string>
 
-static void printTitle(const std::string& title)
+static void printTitle(const std::string &title)
 {
     std::cout << "\n=== " << title << " ===" << std::endl;
 }
 
-static void testForm(Intern& intern, Bureaucrat& boss,
-                     const std::string& formName,
-                     const std::string& target)
+static void testForm(Intern &intern, Bureaucrat &boss, const std::string &formName, const std::string &target)
 {
     printTitle("Form creation: \"" + formName + "\"");
 
-    AForm* form = intern.makeForm(formName, target);
+    AForm *form = intern.makeForm(formName, target);
     if (form == NULL)
     {
         std::cout << "No form was created." << std::endl;
@@ -35,12 +33,11 @@ static void testForm(Intern& intern, Bureaucrat& boss,
     delete form;
 }
 
-static void testGradeBoundaries(Intern& intern, const std::string& formName,
-                                const std::string& target)
+static void testGradeBoundaries(Intern &intern, const std::string &formName, const std::string &target)
 {
     printTitle("Grade boundaries: " + formName);
 
-    AForm* form = intern.makeForm(formName, target);
+    AForm *form = intern.makeForm(formName, target);
     if (form == NULL)
         return;
 
@@ -77,8 +74,8 @@ static void testIndependentForms(void)
     Intern intern;
     Bureaucrat boss("Boss", 1);
 
-    AForm* first = intern.makeForm("presidential pardon", "Ford Prefect");
-    AForm* second = intern.makeForm("presidential pardon", "Trillian");
+    AForm *first = intern.makeForm("presidential pardon", "Ford Prefect");
+    AForm *second = intern.makeForm("presidential pardon", "Trillian");
     if (first == NULL || second == NULL)
     {
         delete first;
@@ -160,7 +157,7 @@ int main(void)
         testIndependentForms();
         testCopy();
     }
-    catch (const std::exception& e)
+    catch (const std::exception &e)
     {
         std::cout << "Unexpected exception: " << e.what() << std::endl;
         return 1;
