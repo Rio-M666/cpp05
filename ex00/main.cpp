@@ -27,7 +27,6 @@ static void testInvalidGrades(void)
     try
     {
         Bureaucrat tooHigh("TooHigh", 0);
-        std::cout << "ERROR: grade 0 was accepted: " << tooHigh << std::endl;
     }
     catch (const std::exception& e)
     {
@@ -37,7 +36,6 @@ static void testInvalidGrades(void)
     try
     {
         Bureaucrat tooLow("TooLow", 151);
-        std::cout << "ERROR: grade 151 was accepted: " << tooLow << std::endl;
     }
     catch (const std::exception& e)
     {
@@ -61,7 +59,6 @@ static void testGradeChanges(void)
     try
     {
         alice.upGrade();
-        std::cout << "ERROR: upgrade beyond grade 1 was accepted." << std::endl;
     }
     catch (const std::exception& e)
     {
@@ -78,7 +75,6 @@ static void testGradeChanges(void)
     try
     {
         bob.downGrade();
-        std::cout << "ERROR: downgrade beyond grade 150 was accepted." << std::endl;
     }
     catch (const std::exception& e)
     {

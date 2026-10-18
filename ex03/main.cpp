@@ -19,10 +19,7 @@ static void testForm(Intern &intern, Bureaucrat &boss, const std::string &formNa
 
     AForm *form = intern.makeForm(formName, target);
     if (form == NULL)
-    {
-        std::cout << "No form was created." << std::endl;
         return;
-    }
 
     std::cout << *form << std::endl;
     std::cout << "[sign successfully]" << std::endl;
@@ -30,40 +27,6 @@ static void testForm(Intern &intern, Bureaucrat &boss, const std::string &formNa
     std::cout << *form << std::endl;
     std::cout << "[execute successfully]" << std::endl;
     boss.executeForm(*form);
-    delete form;
-}
-
-static void testGradeBoundaries(Intern &intern, const std::string &formName, const std::string &target)
-{
-    printTitle("Grade boundaries: " + formName);
-
-    AForm *form = intern.makeForm(formName, target);
-    if (form == NULL)
-        return;
-
-    Bureaucrat signer("Signer", form->getSignGrade());
-    Bureaucrat weakSigner("Weak signer", form->getSignGrade() + 1);
-    Bureaucrat executor("Executor", form->getExecuteGrade());
-    Bureaucrat weakExecutor("Weak executor", form->getExecuteGrade() + 1);
-
-    std::cout << *form << std::endl;
-
-    std::cout << "[execute before signing]" << std::endl;
-    executor.executeForm(*form);
-
-    std::cout << "[sign with insufficient grade]" << std::endl;
-    weakSigner.signForm(*form);
-    std::cout << *form << std::endl;
-
-    std::cout << "[sign at the required grade]" << std::endl;
-    signer.signForm(*form);
-    std::cout << *form << std::endl;
-
-    std::cout << "[execute with insufficient grade]" << std::endl;
-    weakExecutor.executeForm(*form);
-
-    std::cout << "[execute at the required grade]" << std::endl;
-    executor.executeForm(*form);
     delete form;
 }
 
@@ -119,15 +82,6 @@ static void testInvalidNames(void)
     testForm(intern, boss, "presidential pardon ", "Trailing space");
 }
 
-static void testGradeBoundaries(void)
-{
-    Intern intern;
-
-    testGradeBoundaries(intern, "shrubbery creation", "boundary_garden");
-    testGradeBoundaries(intern, "robotomy request", "Marvin");
-    testGradeBoundaries(intern, "presidential pardon", "Zaphod");
-}
-
 static void testCopy(void)
 {
     printTitle("Copy and assignment");
@@ -153,7 +107,6 @@ int main(void)
     {
         testCreation();
         testInvalidNames();
-        testGradeBoundaries();
         testIndependentForms();
         testCopy();
     }

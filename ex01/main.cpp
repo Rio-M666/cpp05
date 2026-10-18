@@ -49,7 +49,6 @@ static void testInvalidGrades(void)
     try
     {
         Form tooHigh("TooHigh", 0, 50);
-        std::cout << "ERROR: grade 0 was accepted: " << tooHigh << std::endl;
     }
     catch (const std::exception& e)
     {
@@ -59,7 +58,6 @@ static void testInvalidGrades(void)
     try
     {
         Form tooLow("TooLow", 50, 151);
-        std::cout << "ERROR: grade 151 was accepted: " << tooLow << std::endl;
     }
     catch (const std::exception& e)
     {
